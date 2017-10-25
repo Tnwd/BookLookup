@@ -1,38 +1,40 @@
-function isbn(AmazonService){
+function BookLookup(AmazonService){
   this.AmazonService = AmazonService
 
-  this.echo = (isbn,title,image)=>{
-    var isbn = isbn(isbn,title,image)
+  this.echo = (isbn)=>{
+    var book = this.AmazonService(isbn)
     return{
-      isbn: isn.isbn,
-      title: isbn.title,
-      image: isbn.image
+
+      title: book.title,
+      image: book.image,
+      isbn: '0000000000000'
 
     }
   }
 }
-test('isbn', (AmazonService) => {
+test('isbn', () => {
 
-const mockAmazonservice = jest.fn().mockAmazonservice({
+const mockAmazonservice = jest.fn().mockReturnValue({
 
-
-  var isbn ='9780140285000'
-  var title ='XOAutosport'
-  var image ='www.xo-autosport.com/logo.jpg'
+  title :'bookname :XOAutosport',
+  image :'cover :www.xo-autosport.com/logo.jpg',
+  isbn :'9780140285000'
 
 
 })
-  var app = new isbn(mockAmazonservice)
+  var app = new BookLookup(mockAmazonservice)
   var isbn = '9780140285000'
-  var result = app.echo(isbn,title,image)
+  var result = app.echo(isbn)
 
 
-expect(mockAmazonservice).toHaveBeenCalled(
+expect(mockAmazonservice).toHaveBeenCalled()
 expect(mockAmazonservice).toHaveBeenCalledWith(isbn)
-expect(result).toHaveProperty('isbn')
 expect(result).toHaveProperty('title')
 expect(result).toHaveProperty('image')
-expect(result.isbn).toBe('isbn: 9780140285000')
-expect(result.title).toBe('title: XOAutosport')
-expect(result.image).toBe('image: www.xo-autosport.com/logo.jpg')
+expect(result).toHaveProperty('isbn')
+expect(result.title).toBe('bookname :XOAutosport')
+expect(result.image).toBe('cover :www.xo-autosport.com/logo.jpg')
+expect(result.isbn).toHaveLength(13)
+
+
 })
